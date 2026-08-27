@@ -1,0 +1,102 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --ink: #E8ECF4;
+  --dim: #7A86A0;
+  --faint: #4A5578;
+  --cobalt: #3D6BE0;
+  --ground: #06070C;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--ground);
+}
+
+body {
+  font-family: "IBM Plex Mono", Menlo, monospace;
+  color: var(--ink);
+  /* static fallback if WebGL is unavailable */
+  background:
+    radial-gradient(42% 62% at 66% 38%, #12266B 0%, rgba(61, 107, 224, 0.35) 55%, transparent 75%),
+    radial-gradient(30% 44% at 27% 76%, #1B3488 0%, rgba(90, 133, 238, 0.3) 55%, transparent 75%),
+    var(--ground);
+}
+
+::selection { background: var(--cobalt); color: #fff; }
+
+#scene {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.frame {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+}
+
+.hero { text-align: center; }
+
+.wordmark {
+  font-family: "Michroma", "Eurostile", "Helvetica Neue", sans-serif;
+  font-weight: 400;
+  font-size: clamp(26px, 6vw, 76px);
+  letter-spacing: 0.3em;
+  padding-left: 0.3em; /* optically recenters tracked caps */
+  color: var(--ink);
+  text-shadow: 0 0 32px rgba(61, 107, 224, 0.4);
+  white-space: nowrap;
+  animation: settle 2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.subtitle {
+  margin-top: clamp(16px, 2.6vw, 30px);
+  font-size: clamp(9px, 1.1vw, 12px);
+  font-weight: 500;
+  letter-spacing: 0.5em;
+  padding-left: 0.5em;
+  color: var(--dim);
+  text-shadow: 0 0 12px rgba(6, 7, 12, 0.9);
+  animation: rise 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.55s both;
+}
+
+.corner {
+  position: absolute;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--faint);
+  animation: rise 1.2s ease-out 1.1s both;
+  font-variant-numeric: tabular-nums;
+}
+
+.tl { top: 26px; left: 30px; }
+.tr { top: 26px; right: 30px; }
+.bl { bottom: 26px; left: 30px; }
+.br { bottom: 26px; right: 30px; }
+
+@keyframes settle {
+  from { opacity: 0; letter-spacing: 0.52em; filter: blur(6px); }
+  to   { opacity: 1; letter-spacing: 0.3em;  filter: blur(0); }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wordmark, .subtitle, .corner { animation: none; }
+}
+
+@media (max-width: 640px) {
+  .tl, .bl { left: 18px; }
+  .tr, .br { right: 18px; }
+  .corner { font-size: 8.5px; }
+}
